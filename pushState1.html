@@ -9,15 +9,15 @@
 $(document).ready(function(e) {
     $("a").click(function(e){
 
-        e.preventDefault();
-        var url = $(this).attr("href");
-        history.pushState({page:url},url, url);
+        e.preventDefault();//防止點選連結時打開
+        var url = $(this).attr("href");///將現在點擊之a的href屬性附給url變量
+        history.pushState({page:url},url, url);////////更新網址列顯示之網址，不改畫面
 
         showPage(url);
     });
 });
 
-$(window).bind("popstate", function(e){
+$(window).bind("popstate", function(e){/////////變換點擊上下頁時觸發popState
 
     var state = event.state;
     if(state){
@@ -28,9 +28,10 @@ $(window).bind("popstate", function(e){
 });
 
 function showPage(hrefPage){
-    $.get(hrefPage,function(result){
-        $("#content").html($(result).filter('#content').text());
+    $.get(hrefPage,function(result){//////發出get請求
+        $("#content").html($(result).filter('#content').text());///將ID為content的text過濾出付給當前頁面的ID為content
         $("#content2").html($(result).filter('#content2').text());
+        console.log(result);
     });
 
 }
